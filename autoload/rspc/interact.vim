@@ -1,7 +1,9 @@
 function! rspc#interact#New() abort
-    execute "tabe"
+    let l:name = input("input filename(full): ")
+    execute "tabe " . l:name
     call rspc#yank#NewMain()
     call rspc#yank#AppendTemplate("rw")
+    execute "w"
 endfunction
 
 function! rspc#interact#Template() abort
