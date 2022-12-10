@@ -1,11 +1,11 @@
 use std::{io, str};
 
-pub struct Scanner<R> {
+pub struct RwScanner<R> {
     reader: R,
     buffer: Vec<String>,
 }
 
-impl<R: io::BufRead> Scanner<R> {
+impl<R: io::BufRead> RwScanner<R> {
     pub fn new(reader: R) -> Self {
         Self {
             reader,
@@ -25,8 +25,8 @@ impl<R: io::BufRead> Scanner<R> {
     }
 }
 
-pub fn stdio_scanner(stdin: &io::Stdin) -> Scanner<io::StdinLock> {
-    Scanner::new(stdin.lock())
+pub fn stdio_scanner(stdin: &io::Stdin) -> RwScanner<io::StdinLock> {
+    RwScanner::new(stdin.lock())
 }
 
 pub fn stdio_bufwriter(stdout: &io::Stdout) -> io::BufWriter<io::StdoutLock> {
@@ -37,7 +37,7 @@ pub fn stdio_bufwriter(stdout: &io::Stdout) -> io::BufWriter<io::StdoutLock> {
 mod tests {
     use super::*;
 
-    fn do_add<R: io::BufRead, W: io::Write>(scan: &mut Scanner<R>, out: &mut W) {
+    fn do_add<R: io::BufRead, W: io::Write>(scan: &mut RwScanner<R>, out: &mut W) {
         let x = scan.token::<i64>();
         let y = scan.token::<i64>();
         writeln!(out, "{} + {} = {}", x, y, x + y).unwrap();
@@ -46,7 +46,7 @@ mod tests {
     #[test]
     fn test_in_memory() {
         let input: &[u8] = b"1 2";
-        let mut scan = Scanner::new(input);
+        let mut scan = RwScanner::new(input);
         let mut out = vec![];
 
         do_add(&mut scan, &mut out);
