@@ -1,11 +1,9 @@
-let s:plugin_dir = fnamemodify(expand("<sfile>"), ":h:h:h")
-
 let s:INS_TEM_HINT = "// placeholder for coming template by rspc"
 let s:TRACE_TOGGLE_HINT = "// Comment this line to disable trace log, by rspc"
 let s:TRACE_DISABLE = "// [disable] "
 
 function! rspc#yank#AppendTemplate(name) abort
-    let l:template_dir = s:plugin_dir . "/pcalgo/src"
+    let l:template_dir = rspc#utils#plugin_dir() . "/pcalgo/src"
     let l:template_file = l:template_dir . "/" . a:name . ".rs"
     let l:text = readfile(l:template_file)
     let l:inslin = search(s:INS_TEM_HINT)

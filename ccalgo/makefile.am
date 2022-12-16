@@ -1,0 +1,2 @@
+bin_PROGRAMS = main_template
+main_template_SOURCES = main_template.cc
