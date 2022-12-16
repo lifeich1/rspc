@@ -24,10 +24,10 @@ function! rspc#interact#Template() abort
     endif
     if rspc#utils#is_rs_f(bufname())
         call rspc#yank#AppendTemplate(l:name)
-    elseif rspc#utils#is_cc_f(l:name)
+    elseif rspc#utils#is_cc_f(bufname())
         throw 'Cpp append template not implemented yet!'
     else
-        throw "File format of " . l:name . " is unexpected!"
+        throw "File format of " . bufname() " is unexpected!"
     endif
 endfunction
 
@@ -42,4 +42,14 @@ endfunction
 
 function! rspc#interact#CcNew() abort
     call rspc#ccyank#NewMain()
+endfunction
+
+function! rspc#interact#Make() abort
+    if &modified
+        execute 'w'
+    endif
+    if rspc#utils#is_cc_f(bufname())
+        execute 'set mp=make\ F=%\ -f\ ' . rspc#utils#CcMakefile()
+    endif
+    execute "make"
 endfunction
