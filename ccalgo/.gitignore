@@ -1,11 +1,13 @@
 *.o
+/*.log
+/*.trs
+config.h
+
+# built binary
 main_template
 rspc-cc-algo-version
-main_template.log
-rspc-cc-algo-version.log
-main_template.trs
-rspc-cc-algo-version.trs
-config.h
+point2d
+input2dcoord
 
 # http://www.gnu.org/software/automake
 

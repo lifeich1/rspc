@@ -1,8 +1,16 @@
+AUTOMAKE_OPTIONS = subdir-objects
+
 bin_PROGRAMS = rspc-cc-algo-version
 
-TESTS = main_template rspc-cc-algo-version
+TESTS = $(check_PROGRAMS) \
+		rspc-cc-algo-version
 
-check_PROGRAMS = main_template
+check_PROGRAMS = main_template \
+	 			 point2d \
+				 input2dcoord
 
 main_template_SOURCES = main_template.cc
 rspc_cc_algo_version_SOURCES = rspc-cc-algo-version.cc
+
+point2d_SOURCES = 2d/point2d.cc 2d/point2d.hh
+input2dcoord_SOURCES = 2d/input2dcoord.cc 2d/input2dcoord.hh
