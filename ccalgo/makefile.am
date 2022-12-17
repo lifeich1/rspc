@@ -1,2 +1,8 @@
-bin_PROGRAMS = main_template
+bin_PROGRAMS = rspc-cc-algo-version
+
+TESTS = main_template rspc-cc-algo-version
+
+check_PROGRAMS = main_template
+
 main_template_SOURCES = main_template.cc
+rspc_cc_algo_version_SOURCES = rspc-cc-algo-version.cc

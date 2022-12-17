@@ -1,5 +1,10 @@
 *.o
 main_template
+rspc-cc-algo-version
+main_template.log
+rspc-cc-algo-version.log
+main_template.trs
+rspc-cc-algo-version.trs
 config.h
 
 # http://www.gnu.org/software/automake

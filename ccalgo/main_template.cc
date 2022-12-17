@@ -9,7 +9,7 @@
 // Scheme placeholder for upcoming un-std algorithm, by rspc
 
 using namespace std;
-#define self-todo-placeholder
+#define self_todo_placeholder
 
 
 int main() {
