@@ -9,7 +9,8 @@ check_PROGRAMS = main_template \
 	 			 point2d \
 				 input2dcoord \
 				 range_fill \
-				 discrete2dcoord
+				 discrete2dcoord \
+				 dense_net
 
 main_template_SOURCES = main_template.cc
 rspc_cc_algo_version_SOURCES = rspc-cc-algo-version.cc
@@ -19,3 +20,5 @@ input2dcoord_SOURCES = 2d/input2dcoord.cc 2d/input2dcoord.hh
 discrete2dcoord_SOURCES = 2d/discrete2dcoord.cc 2d/discrete2dcoord.hh
 
 range_fill_SOURCES = numeric/range_fill.cc numeric/range_fill.hh
+
+dense_net_SOURCES = network/dense_net.cc network/dense_net.hh network/network01trait.hh

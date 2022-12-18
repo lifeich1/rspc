@@ -10,6 +10,7 @@ point2d
 input2dcoord
 range_fill
 discrete2dcoord
+dense_net
 
 # http://www.gnu.org/software/automake
 
