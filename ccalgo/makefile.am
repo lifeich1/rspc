@@ -11,7 +11,8 @@ check_PROGRAMS = main_template \
 				 range_fill \
 				 discrete2dcoord \
 				 dense_net \
-				 sparse_net
+				 sparse_net \
+				 bfs
 
 main_template_SOURCES = main_template.cc
 rspc_cc_algo_version_SOURCES = rspc-cc-algo-version.cc
@@ -24,3 +25,4 @@ range_fill_SOURCES = numeric/range_fill.cc numeric/range_fill.hh
 
 dense_net_SOURCES = network/dense_net.cc network/dense_net.hh network/network01trait.hh
 sparse_net_SOURCES = network/sparse_net.cc network/sparse_net.hh network/network01trait.hh
+bfs_SOURCES = network/bfs.cc network/bfs.hh network/sparse_net.hh network/network01trait.hh

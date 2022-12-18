@@ -8,6 +8,8 @@ class SparseNet {
     struct sto_type;
 public:
     typedef typename Trait::edge_type edge_type;
+    typedef std::pair<std::size_t, edge_type *> iter_output;
+    typedef std::pair<std::size_t, edge_type const *> const_iter_output;
 
     explicit SparseNet(): a_used{0} {
         std::fill(g.begin(), g.end(), -1);
@@ -35,7 +37,7 @@ public:
 
     class EdgeIter {
     public:
-        typedef std::pair<std::size_t, edge_type *> value_type;
+        typedef iter_output value_type;
 
         value_type const & operator*() const { return p->p; }
         const value_type * operator->() const { return &p->p; }
@@ -63,6 +65,37 @@ public:
         sto_type *p, * const a;
     };
 
+    class ConstEdgeIter {
+    public:
+        typedef const_iter_output value_type;
+
+        value_type const & operator*() const { return p->pc; }
+        const value_type * operator->() const { return &p->pc; }
+
+        ConstEdgeIter & operator++() { nx(); return *this; }
+        ConstEdgeIter operator++(int) { ConstEdgeIter t = *this; nx(); return t; }
+
+        bool operator==(ConstEdgeIter const & other) const { return i == other.i; }
+        bool operator!=(ConstEdgeIter const & other) const { return i != other.i; }
+    private:
+        friend class ::A::SparseNet<N, M, Trait>::ConstEdgeList;
+
+        ConstEdgeIter(sto_type const * a, int i): i{i}, p{i >= 0 ? a + i : a}, a{a} {}
+
+        void nx() {
+            if (i >= 0) {
+                i = p->nx_sto;
+                if (i >= 0) {
+                    p = a + i;
+                }
+            }
+        }
+
+        int i;
+        sto_type const * p;
+        sto_type const * const a;
+    };
+
     class EdgeList {
     public:
         typedef EdgeIter Iter;
@@ -77,21 +110,42 @@ public:
         sto_type * const a;
     };
 
+    class ConstEdgeList {
+    public:
+        typedef ConstEdgeIter Iter;
+        Iter begin() const { return Iter(a, g); }
+        Iter end() const { return Iter(a, -1); }
+    private:
+        friend class SparseNet;
+
+        ConstEdgeList(sto_type const * a, int g): g{g}, a{a} {}
+
+        const int g;
+        sto_type const * const a;
+    };
+
     template <class Index>
     EdgeList edges(Index i) {
         return EdgeList(a.data(), g[i]);
+    }
+
+    template <class Index>
+    ConstEdgeList edges(Index i) const {
+        return ConstEdgeList(a.data(), g[i]);
     }
 
 private:
     struct sto_type{
         edge_type v;
         int nx_sto;
-        std::pair<std::size_t, edge_type *> p;
+        iter_output p;
+        const_iter_output pc;
 
         void st(std::size_t dst, edge_type const & v, int nx) {
             this->v = v;
             p.first = dst;
             p.second = &this->v;
+            pc = p;
             nx_sto = nx;
         }
     };

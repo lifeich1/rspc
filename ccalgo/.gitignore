@@ -12,6 +12,7 @@ range_fill
 discrete2dcoord
 dense_net
 sparse_net
+bfs
 
 # http://www.gnu.org/software/automake
 

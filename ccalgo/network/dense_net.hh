@@ -14,6 +14,7 @@ template <std::size_t N, class Trait>
 class DenseNet {
 public:
     typedef typename Trait::edge_type edge_type;
+    typedef std::pair<std::size_t, edge_type *> iter_output;
 
     DenseNet() { clear(); }
 
@@ -42,7 +43,7 @@ public:
 
     class EdgeIter {
     public:
-        typedef std::pair<std::size_t, edge_type *> value_type;
+        typedef iter_output value_type;
 
         value_type const & operator*() const { return p; }
         const value_type * operator->() const { return &p; }
@@ -70,7 +71,7 @@ public:
         }
 
         value_type p;
-        edge_type *ed;
+        edge_type * const ed;
     };
 
     class EdgeList {
@@ -84,7 +85,7 @@ public:
         explicit EdgeList(edge_type * bg)
             : bg(bg, bg + N), ed(bg + N, bg + N) {}
 
-         Iter bg, ed;
+         const Iter bg, ed;
     };
 
     template <class Index>
