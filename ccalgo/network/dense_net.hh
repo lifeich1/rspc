@@ -3,6 +3,12 @@
 #include <algorithm>
 #include <cstring>
 
+// Net describe facility
+//  - edges(): get slist-like one node edges travel facility
+//  - *edges()::Iter = std::pair(dst_node_index, &edge_desc)
+//  - link(p0, p1[, v]): add bidirectional edge
+//  - arrow(src, dst[, v]): add directional edge
+
 namespace A {
 template <std::size_t N, class Trait>
 class DenseNet {
