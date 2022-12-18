@@ -9,6 +9,7 @@
 
 namespace A {
 template <class T>
+/// Input vector<Point2d> like `Input2dCoord<int>(cin, n) >> v`
 class Input2dCoord {
 public:
     typedef Point2d<T> Pn;

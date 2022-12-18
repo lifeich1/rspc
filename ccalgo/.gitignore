@@ -8,6 +8,8 @@ main_template
 rspc-cc-algo-version
 point2d
 input2dcoord
+range_fill
+discrete2dcoord
 
 # http://www.gnu.org/software/automake
 
