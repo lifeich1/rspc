@@ -38,6 +38,21 @@ int main() {
         P(2, 0, 1, 4);
         P(3);
         P(4);
+
+#define Q(S, ...) \
+        do { \
+            auto const & cnw = nw; Nv v; \
+            std::transform(cnw.edges(S).begin(), cnw.edges(S).end(), std::back_inserter(v), [](auto i) { return i.first; }); \
+            std::copy(v.begin(), v.end(), std::ostream_iterator<Nv::value_type>(std::cout, " ")); \
+            std::cout << std::endl; \
+            ASSERT_EQ(v, (Nv{__VA_ARGS__})); \
+        } while (0)
+
+        Q(0, 1);
+        Q(1, 2);
+        Q(2, 0, 1, 4);
+        Q(3);
+        Q(4);
     }
     return 0;
 }
