@@ -22,7 +22,7 @@ int main() {
         Vec v;
         A::range_fill_n(std::back_inserter(v), 4, 0);
         std::cout << v.size() << std::endl;
-        ASSERT_EQ(v.size(), 4);
+        ASSERT_EQ(v.size(), 4UL);
         ASSERT_EQ(v, (Vec{0, 1, 2, 3}));
     }
 
