@@ -14,8 +14,6 @@ template <std::size_t N, class Trait>
 class DenseNet {
 public:
     typedef typename Trait::edge_type edge_type;
-    typedef std::pair<std::size_t, edge_type *> iter_output;
-    typedef std::pair<std::size_t, edge_type const *> const_iter_output;
 
     DenseNet() { clear(); }
 
@@ -42,57 +40,13 @@ public:
         this->link(p0, p1, Trait::EDGE_SET_VALUE);
     }
 
-    class EdgeIter {
+    template <class Edge> class EdgeListImpl;
+
+    template <class Edge>
+    class EdgeIterImpl {
     public:
-        typedef iter_output value_type;
-
-        value_type const & operator*() const { return p; }
-        const value_type * operator->() const { return &p; }
-
-        EdgeIter & operator++() { nx(); return *this; }
-        EdgeIter operator++(int) { EdgeIter t = *this; nx(); return t; }
-
-        bool operator==(EdgeIter const & other) const { return p.second == other.p.second; }
-        bool operator!=(EdgeIter const & other) const { return p.second != other.p.second; }
-    private:
-        friend class ::A::DenseNet<N, Trait>::EdgeList;
-
-        EdgeIter(edge_type * p, edge_type * ed)
-            : p{p - (ed - N), p}, ed{ed}
-        {
-            if (*p == Trait::EDGE_DEFAULT) nx();
-        }
-
-        void nx() {
-            if (p.second != ed) {
-                do {
-                    ++p.second, ++p.first;
-                } while (p.second != ed && *p.second == Trait::EDGE_DEFAULT);
-            }
-        }
-
-        value_type p;
-        edge_type * const ed;
-    };
-
-    class EdgeList {
-    public:
-        typedef EdgeIter Iter;
-        Iter begin() const { return bg; }
-        Iter end() const { return ed; }
-    private:
-        friend class DenseNet;
-
-        explicit EdgeList(edge_type * bg)
-            : bg(bg, bg + N), ed(bg + N, bg + N) {}
-
-         const Iter bg, ed;
-    };
-
-    class ConstEdgeIter {
-    public:
-        typedef const_iter_output value_type;
-        typedef ConstEdgeIter type;
+        typedef EdgeIterImpl type;
+        typedef std::pair<std::size_t, Edge *> value_type;
 
         value_type const & operator*() const { return p; }
         const value_type * operator->() const { return &p; }
@@ -103,9 +57,9 @@ public:
         bool operator==(type const & other) const { return p.second == other.p.second; }
         bool operator!=(type const & other) const { return p.second != other.p.second; }
     private:
-        friend class ::A::DenseNet<N, Trait>::ConstEdgeList;
+        friend class ::A::DenseNet<N, Trait>::EdgeListImpl<Edge>;
 
-        ConstEdgeIter(edge_type const * p, edge_type const * ed)
+        EdgeIterImpl(Edge * p, Edge * ed)
             : p{p - (ed - N), p}, ed{ed}
         {
             if (*p == Trait::EDGE_DEFAULT) nx();
@@ -120,31 +74,37 @@ public:
         }
 
         value_type p;
-        edge_type const * const ed;
+        Edge * const ed;
     };
 
-    class ConstEdgeList {
+    template <class Edge>
+    class EdgeListImpl {
     public:
-        typedef ConstEdgeIter Iter;
+        typedef EdgeIterImpl<Edge> Iter;
         Iter begin() const { return bg; }
         Iter end() const { return ed; }
     private:
         friend class DenseNet;
 
-        explicit ConstEdgeList(edge_type const * bg)
+        explicit EdgeListImpl(Edge * bg)
             : bg(bg, bg + N), ed(bg + N, bg + N) {}
 
          const Iter bg, ed;
     };
 
+    typedef EdgeListImpl<edge_type> edge_slist;
+    typedef EdgeListImpl<const edge_type> const_edge_slist;
+    typedef typename edge_slist::Iter::value_type iter_output;
+    typedef typename const_edge_slist::Iter::value_type const_iter_output;
+
     template <class Index>
-    EdgeList edges(Index i) {
-        return EdgeList(&a[ei(i, 0)]);
+    edge_slist edges(Index i) {
+        return edge_slist(&a[ei(i, 0)]);
     }
 
     template <class Index>
-    ConstEdgeList edges(Index i) const {
-        return ConstEdgeList(&a[ei(i, 0)]);
+    const_edge_slist edges(Index i) const {
+        return const_edge_slist(&a[ei(i, 0)]);
     }
 
 private:
