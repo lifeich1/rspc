@@ -6,7 +6,6 @@ namespace A {
 template <std::size_t N, std::size_t M, class Trait>
 class SparseNet {
     struct sto_type;
-    template <class T> struct iter_cv { typedef T rtype; };
 public:
     typedef typename Trait::edge_type edge_type;
 
@@ -43,7 +42,7 @@ public:
         typedef typename IterTraits::sto_type sto_type;
         typedef std::pair<std::size_t, edge_type *> value_type;
 
-        value_type const & operator*() const { return p->gp(iter_cv<value_type>()); }
+        value_type const & operator*() const { return gp<edge_type>(); }
         const value_type * operator->() const { return &p->p; }
 
         EdgeIter & operator++() { nx(); return *this; }
@@ -55,6 +54,12 @@ public:
         friend class ::A::SparseNet<N, M, Trait>::EdgeList<IterTraits>;
 
         EdgeIter(sto_type *a, int i): i{i}, p{i >= 0 ? a + i : a}, a{a} {}
+
+        template <typename Edge, std::enable_if_t<!std::is_const_v<Edge>, int> = 0>
+        value_type const & gp() const { return p->p; }
+
+        template <typename Edge, std::enable_if_t<std::is_const_v<Edge>, int> = 0>
+        value_type const & gp() const { return p->pc; }
 
         void nx() {
             if (i >= 0) {
@@ -123,9 +128,6 @@ private:
             pc = p;
             nx_sto = nx;
         }
-
-        iter_output const & gp(iter_cv<iter_output>) const { return p; }
-        const_iter_output const & gp(iter_cv<const_iter_output>) const { return pc; }
     };
 
     std::array<sto_type, M> a;

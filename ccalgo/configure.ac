@@ -17,7 +17,7 @@ AC_PROG_CC
 # Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.
-AX_CXX_COMPILE_STDCXX_14([noext], [mandatory])
+AX_CXX_COMPILE_STDCXX_17([noext], [mandatory])
 
 # Checks for library functions.
 
