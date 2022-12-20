@@ -15,8 +15,8 @@ public:
     typedef Point2d<T> Pn;
     typedef std::vector<Pn> Vec;
 
-    template <class CharT, class Size>
-    explicit Input2dCoord(std::basic_istream<CharT> &&s, Size n) {
+    template <class Stream, class Size>
+    explicit Input2dCoord(Stream &&s, Size n) {
         v.reserve(n);
         std::copy_n(std::istream_iterator<Pn>(s), n, std::back_inserter(v));
     }

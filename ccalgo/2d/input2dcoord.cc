@@ -15,5 +15,9 @@ int main() {
     I2C(std::stringstream{"11 2  3 44  99 77\n"}, 3) >> v;
     ASSERT_EQ(v, (Vec{Pn(11, 2), Pn(3, 44), Pn(99, 77)}));
 
+    std::stringstream ss{"11 2  3 44  99 77\n"};
+    I2C(ss, 3) >> v;
+    ASSERT_EQ(v, (Vec{Pn(11, 2), Pn(3, 44), Pn(99, 77)}));
+
     return 0;
 }

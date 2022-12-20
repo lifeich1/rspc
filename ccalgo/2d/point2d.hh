@@ -6,6 +6,7 @@
 namespace A {
 template <class T>
 struct Point2d {
+    typedef Point2d Pn;
     T x, y;
     Point2d() {}
     Point2d(T x, T y): x(x), y(y) {}
@@ -16,6 +17,8 @@ struct Point2d {
     inline bool near(const Point2d& other, T th = 1) {
         return this->mdis(other) <= th;
     }
+
+    Pn operator+ (const Pn & rhs) const { return {x + rhs.x, y + rhs.y}; }
 
     CONSTEXPR14 bool operator< (Point2d const & rhs) const {
         return this->x < rhs.x || (this->x == rhs.x && this->y < rhs.y);
