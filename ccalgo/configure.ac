@@ -18,6 +18,7 @@ AC_PROG_CC
 
 # Checks for typedefs, structures, and compiler characteristics.
 AX_CXX_COMPILE_STDCXX_17([noext], [mandatory])
+AX_CXX_GCC_ABI_DEMANGLE
 
 # Checks for library functions.
 

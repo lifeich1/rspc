@@ -12,10 +12,13 @@ check_PROGRAMS = main_template \
 				 discrete2dcoord \
 				 dense_net \
 				 sparse_net \
-				 bfs
+				 bfs \
+				 zip_slist
 
 main_template_SOURCES = main_template.cc
 rspc_cc_algo_version_SOURCES = rspc-cc-algo-version.cc
+
+zip_slist_SOURCES = common/zip_slist.cc common/zip_slist.hh
 
 point2d_SOURCES = 2d/point2d.cc 2d/point2d.hh
 input2dcoord_SOURCES = 2d/input2dcoord.cc 2d/input2dcoord.hh

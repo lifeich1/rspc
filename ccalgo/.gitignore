@@ -13,6 +13,7 @@ discrete2dcoord
 dense_net
 sparse_net
 bfs
+zip_slist
 
 # http://www.gnu.org/software/automake
 
