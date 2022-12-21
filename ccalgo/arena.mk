@@ -1,6 +1,6 @@
 F :=
 CC := g++
-CCFLAGS := -std=c++14 -g -Wall
+CCFLAGS := -std=c++17 -g -Wall
 
 ifeq ($(F),)
 	$(error Empty filename)
