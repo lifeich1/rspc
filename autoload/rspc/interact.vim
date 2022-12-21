@@ -25,6 +25,7 @@ function! rspc#interact#Template() abort
     if rspc#utils#is_rs_f(bufname())
         call rspc#yank#AppendTemplate(l:name)
     elseif rspc#utils#is_cc_f(bufname())
+        call rspc#ccyank#RebuildBuf4Scheme()
         call rspc#ccyank#AppendTemplate(l:name)
         call rspc#ccyank#FixTemplates()
     else

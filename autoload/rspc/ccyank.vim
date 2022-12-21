@@ -5,13 +5,11 @@ let s:SCHEME_INC_HINT = '// Scheme by rspc:'
 let s:TEM_BUF = {}
 let s:TEM_DEPS = {}
 let s:TEM_STD = {}
-let s:just_clear_buf = 0
 
 function! rspc#ccyank#ClearBuffer() abort
     let s:TEM_BUF = {}
     let s:TEM_DEPS = {}
     let s:TEM_STD = {}
-    let s:just_clear_buf = 1
 endfunction
 
 function! rspc#ccyank#NewMain() abort
@@ -42,6 +40,7 @@ endfunction
 
 function! rspc#ccyank#FixScheme(scheme)
     let l:scheme = a:scheme->copy()->sort()->uniq()
+
     " fix missing deps
     let l:flag = 1
     while l:flag
@@ -86,10 +85,12 @@ endfunction
 
 function! rspc#ccyank#AppendTemplate(name, sync_scheme = 1, do_append = 1) abort
     echo ''
-    echo 'append template' a:name
     if s:TEM_BUF->has_key(a:name)
         let l:text = s:TEM_BUF[a:name]
         echo ' text buffered:' a:name
+        if !a:do_append
+            return " no append means just rebuild buffer
+        endif
     else
         let l:file = rspc#utils#find_cc_tem(a:name)
         echo ' file:' l:file
@@ -98,6 +99,7 @@ function! rspc#ccyank#AppendTemplate(name, sync_scheme = 1, do_append = 1) abort
         endif
         let l:text = readfile(l:file)
     endif
+    echo 'append template' a:name
 
     let l:deps = []
     let l:stds = []
@@ -132,15 +134,15 @@ function! rspc#ccyank#AppendTemplate(name, sync_scheme = 1, do_append = 1) abort
     endif
 endfunction
 
+function! rspc#ccyank#RebuildBuf4Scheme() abort
+    echo 'rebuilding buffer ...'
+    let l:scheme = rspc#ccyank#GetScheme()
+    call map(l:scheme->deepcopy()->sort()->uniq(), 'rspc#ccyank#AppendTemplate(v:val, 0, 0)')
+endfunction
+
 function! rspc#ccyank#FixTemplates() abort
     echo 'fix templates ...'
     let l:scheme = rspc#ccyank#GetScheme()
-    if s:just_clear_buf
-        echo 'rebuilding buffer ...'
-        let s:just_clear_buf = 0
-        call map(l:scheme->deepcopy()->sort()->uniq(), 'rspc#ccyank#AppendTemplate(v:val, 0, 0)')
-        echo 'rebuilding buffer is done.'
-    endif
     let l:n_scheme = rspc#ccyank#FixScheme(l:scheme)
     if l:scheme !=# l:n_scheme
         echo 'rearranging templates ...'
