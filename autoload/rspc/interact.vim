@@ -46,6 +46,22 @@ function! rspc#interact#CcNew() abort
     call rspc#ccyank#NewMain()
 endfunction
 
+function! rspc#interact#ReloadAll() abort
+    if rspc#utils#is_rs_f(bufname())
+        throw "Currently rs 'ReloadAll' is unimplement"
+    elseif rspc#utils#is_cc_f(bufname())
+        call rspc#interact#CcReloadAll()
+    else
+        throw "File format of " . bufname() " is unexpected!"
+    endif
+endfunction
+
+function! rspc#interact#CcReloadAll() abort
+    call rspc#ccyank#ClearBuffer()
+    call rspc#ccyank#RebuildBuf4Scheme()
+    call rspc#ccyank#FixTemplates(1)
+endfunction
+
 function! rspc#interact#Make() abort
     if &modified
         execute 'w'

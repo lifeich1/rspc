@@ -140,11 +140,11 @@ function! rspc#ccyank#RebuildBuf4Scheme() abort
     call map(l:scheme->deepcopy()->sort()->uniq(), 'rspc#ccyank#AppendTemplate(v:val, 0, 0)')
 endfunction
 
-function! rspc#ccyank#FixTemplates() abort
+function! rspc#ccyank#FixTemplates(force_reload = 0) abort
     echo 'fix templates ...'
     let l:scheme = rspc#ccyank#GetScheme()
     let l:n_scheme = rspc#ccyank#FixScheme(l:scheme)
-    if l:scheme !=# l:n_scheme
+    if l:scheme !=# l:n_scheme || a:force_reload
         echo 'rearranging templates ...'
         let l:s = search(s:ALGO_INC_HINT) + 1
         let l:t = search(s:EDA_INC_HINT) - 1

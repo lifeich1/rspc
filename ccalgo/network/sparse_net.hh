@@ -51,7 +51,7 @@ public:
         bool operator==(EdgeIter const & other) const { return i == other.i; }
         bool operator!=(EdgeIter const & other) const { return i != other.i; }
     private:
-        friend class ::A::SparseNet<N, M, Trait>::EdgeList<IterTraits>;
+        friend class EdgeList<IterTraits>;
 
         EdgeIter(sto_type *a, int i): i{i}, p{i >= 0 ? a + i : a}, a{a} {}
 
