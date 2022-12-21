@@ -6,6 +6,11 @@
 // End placeholder for upcoming un-std algorithm, by rspc
 // Scheme by rspc:
 
+#if defined(RSPC_TRACE_HINT)
+#define TRACE(...) do { __VA_ARGS__; } while (0)
+#else
+#define TRACE(...) (void)0
+#endif
 using namespace std;
 #define self_todo_placeholder
 
