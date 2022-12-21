@@ -1,7 +1,7 @@
 # RSPC
 
-It is a vim plugin aiming at easily utilizing algorithm templates *in personal
-requirement*.
+It is a vim plugin aiming at easily utilizing algorithm templates **in personal
+requirement**.
 
 RSPC: PC for "programing competion", *RS for nothing but just historical redundancy*.
 
