@@ -3,6 +3,7 @@
 #include "config.h"
 #include <vector>
 #include <iterator>
+#include <array>
 
 #if defined(HAVE_GCC_ABI_DEMANGLE)
 # include <cxxabi.h>
@@ -17,11 +18,14 @@
 # define SHOWTYPE(V)
 #endif
 
+template <std::size_t N>
+using Arr = std::array<int, N>;
+
 int main() {
     typedef std::vector<int> Vec;
     Vec v0{1, 2, 3, 4, 5, 6};
     Vec v1{100, 99, 98, 97, 96};
-    Vec v2{-1, -2, -3, -4, -5};
+    Arr<5> v2{-1, -2, -3, -4, -5};
 
     {
         auto l = (A::zip_slist(v0.begin(), v0.begin() + 5) + v1).c(v2.begin(), v2.begin() + 4);

@@ -2,6 +2,7 @@
 #include <tuple>
 #include <type_traits>
 #include <functional>
+#include <iterator>
 
 namespace A {
 template <class T>
@@ -9,25 +10,25 @@ using get_cv_iterator_t =
 std::conditional_t<std::is_const_v<T>,
     typename T::const_iterator, typename T::iterator>;
 
-template <std::size_t N, class Tuple, class FirstType, class... Types>
+template <std::size_t N, class Tuple, class FirstIter, class... Iters>
 struct _tuple_deref_impl {
-    typedef typename FirstType::reference FirstRef;
-    std::tuple<FirstRef, typename Types::reference...>
+    typedef typename std::iterator_traits<FirstIter>::reference FirstRef;
+    std::tuple<FirstRef, typename std::iterator_traits<Iters>::reference...>
         operator() (Tuple const & t) {
         return std::tuple_cat(
                 std::make_tuple(std::ref(*std::get<std::tuple_size_v<Tuple> - N>(t))),
-                _tuple_deref_impl<N - 1, Tuple, Types...>{}(t)
+                _tuple_deref_impl<N - 1, Tuple, Iters...>{}(t)
                 );
     }
 };
-template <class Tuple, class Type>
-struct _tuple_deref_impl<1, Tuple, Type> {
-    std::tuple<typename Type::reference> operator() (Tuple const & t) {
+template <class Tuple, class Iter>
+struct _tuple_deref_impl<1, Tuple, Iter> {
+    std::tuple<typename std::iterator_traits<Iter>::reference> operator() (Tuple const & t) {
         return {*std::get<std::tuple_size_v<Tuple> - 1>(t)};
     }
 };
-template <std::size_t N, class... Types>
-using tuple_deref = _tuple_deref_impl<N, std::tuple<Types...>, Types...>;
+template <std::size_t N, class... Iters>
+using tuple_deref = _tuple_deref_impl<N, std::tuple<Iters...>, Iters...>;
 
 template <std::size_t N, class Tuple>
 struct tuple_inc {
@@ -85,8 +86,11 @@ public:
         typedef std::tuple<Iters...> Tuple;
         static constexpr std::size_t tuple_siz = std::tuple_size_v<Tuple>;
     public:
-        typedef std::tuple<typename Iters::value_type...> value_type;
-        typedef std::tuple<typename Iters::reference...> reference;
+        typedef std::tuple<typename std::iterator_traits<Iters>::value_type...> value_type;
+        typedef std::tuple<typename std::iterator_traits<Iters>::reference...> reference;
+        typedef std::ptrdiff_t difference_type;
+        typedef void pointer;
+        typedef std::forward_iterator_tag iterator_category;
 
         reference operator* () const { return tuple_deref<tuple_siz, Iters...>{}(_it); }
 
@@ -95,6 +99,8 @@ public:
 
         bool operator==(ZIter const & other) const { return tuple_any_eq<tuple_siz, Tuple>{}(_it, other._it); }
         bool operator!=(ZIter const & other) const { return !tuple_any_eq<tuple_siz, Tuple>{}(_it, other._it); }
+
+        ZIter() {}
     private:
         friend class ZipSList;
 
@@ -103,7 +109,8 @@ public:
         Tuple _it;
     };
 
-    template <class F, class FR = std::invoke_result_t<F, typename Iters::reference...>>
+    template <class F, class FR
+        = std::invoke_result_t<F, typename std::iterator_traits<Iters>::reference...>>
     auto wrap(F && f) -> std::function<FR(typename ZIter::reference const &)>
     {
         return [&f](typename ZIter::reference const & t) {
