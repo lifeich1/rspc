@@ -2,6 +2,7 @@
 #include "assert.hh"
 #include "config.h"
 #include <vector>
+#include <iterator>
 
 #if defined(HAVE_GCC_ABI_DEMANGLE)
 # include <cxxabi.h>
@@ -37,6 +38,16 @@ int main() {
             ASSERT_EQ(r, std::make_tuple(v0[i], v1[i], v2[i]));
         }
         ASSERT_EQ(it, l.end());
+        std::cout << "test wrapper\n";
+        std::for_each(l.begin(), l.end(), l.wrap([](int & i, int & j, int & k) -> void {
+                        std::cout << i << ' ' << j << ' ' << k << std::endl;
+                    }));
+        std::cout << "done test wrapper\n";
+        std::cout << "v0 in l: ";
+        std::transform(l.begin(), l.end(),
+                std::ostream_iterator<int>(std::cout, " "),
+                l.wrap([](int & i, int&, int&) { return i; }));
+        std::cout << std::endl;
     }
 
     {

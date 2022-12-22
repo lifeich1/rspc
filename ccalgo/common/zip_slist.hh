@@ -103,6 +103,14 @@ public:
         Tuple _it;
     };
 
+    template <class F, class FR = std::invoke_result_t<F, typename Iters::reference...>>
+    auto wrap(F && f) -> std::function<FR(typename ZIter::reference const &)>
+    {
+        return [&f](typename ZIter::reference const & t) {
+            return std::apply(f, t);
+        };
+    }
+
     ZIter begin() const { return {_first}; }
     ZIter end() const { return {_last}; }
 
