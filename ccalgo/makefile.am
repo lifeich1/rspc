@@ -1,5 +1,3 @@
-AUTOMAKE_OPTIONS = subdir-objects
-
 bin_PROGRAMS = rspc-cc-algo-version
 
 TESTS = $(check_PROGRAMS) \

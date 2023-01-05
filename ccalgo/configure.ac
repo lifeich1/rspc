@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.71])
 AC_INIT([rspc-cc-algo], [0.1], [lifeich0@gmail.com])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
 AC_CONFIG_SRCDIR([main_template.cc])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
