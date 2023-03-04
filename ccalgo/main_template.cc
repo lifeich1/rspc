@@ -16,10 +16,11 @@ using namespace std;
 
 
 int main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0), cout.tie(0);
 #if defined(RSPC_TRACE_BTIME)
     TRACE(cout << "build time: " RSPC_TRACE_BTIME "\n");
+#else
+    ios::sync_with_stdio(0);
+    cin.tie(0), cout.tie(0);
 #endif
 
     // First todo here, by rspc
