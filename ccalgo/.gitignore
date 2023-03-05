@@ -14,6 +14,7 @@ dense_net
 sparse_net
 bfs
 zip_slist
+calc_in_mod
 
 # http://www.gnu.org/software/automake
 
