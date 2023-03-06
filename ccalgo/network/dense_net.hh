@@ -99,12 +99,12 @@ public:
 
     template <class Index>
     edge_slist edges(Index i) {
-        return edge_slist(&a[ei(i, 0)]);
+        return edge_slist(&a[ei(i, static_cast<Index>(0))]);
     }
 
     template <class Index>
     const_edge_slist edges(Index i) const {
-        return const_edge_slist(&a[ei(i, 0)]);
+        return const_edge_slist(&a[ei(i, static_cast<Index>(0))]);
     }
 
 private:

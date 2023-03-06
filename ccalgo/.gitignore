@@ -15,6 +15,7 @@ sparse_net
 bfs
 zip_slist
 calc_in_mod
+tree_root_hash
 
 # http://www.gnu.org/software/automake
 
