@@ -14,6 +14,12 @@ public:
 
     TreeRootHash(Net * net): net{net} {}
 
+    void clear() {
+        h_of_v.clear();
+        vs_of_qh.clear();
+        v_of_h.clear();
+    }
+
     template <class Index>
     hash_t operator() (Index v) {
         auto it = h_of_v.find(v);

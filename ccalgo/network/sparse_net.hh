@@ -9,14 +9,22 @@ class SparseNet {
 public:
     typedef typename Trait::edge_type edge_type;
 
-    explicit SparseNet(): a_used{0} {
+    explicit SparseNet(): a_used{0}, g_used{0} {
         std::fill(g.begin(), g.end(), -1);
+    }
+
+    void clear() {
+        a_used = 0;
+        std::fill(g.begin(), g.begin() + g_used + 1, -1);
+        g_used = 0;
     }
 
     template <class Index>
     void arrow(Index src, Index dst, edge_type const & v) {
         a[a_used].st(dst, v, g[src]);
         g[src] = a_used++;
+        std::size_t _s = src;
+        if (_s > g_used) g_used = _s;
     }
     template <class Index>
     inline void arrow(Index src, Index dst) {
@@ -132,6 +140,6 @@ private:
 
     std::array<sto_type, M> a;
     std::array<int, N> g;
-    std::size_t a_used;
+    std::size_t a_used, g_used;
 };
 } // namespace A
