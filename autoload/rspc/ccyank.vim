@@ -89,7 +89,7 @@ function! rspc#ccyank#AppendTemplate(name, sync_scheme = 1, do_append = 1) abort
         let l:text = s:TEM_BUF[a:name]
         echo ' text buffered:' a:name
         if !a:do_append
-            return " no append means just rebuild buffer
+            return " no append means just rebuild buffer"
         endif
     else
         let l:file = rspc#utils#find_cc_tem(a:name)
