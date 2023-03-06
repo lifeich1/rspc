@@ -54,6 +54,7 @@ private:
                 net->edges(v).end(),
                 std::back_inserter(hs),
                 [&](auto const & e) { return (*this)(e.first); });
+        sort(hs.begin(), hs.end());
     }
 
     hash_t qhash(std::vector<hash_t> const & hs) {
