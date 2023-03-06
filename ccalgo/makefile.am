@@ -13,7 +13,8 @@ check_PROGRAMS = main_template \
 				 bfs \
 				 zip_slist \
 				 calc_in_mod \
-				 tree_root_hash
+				 tree_root_hash \
+				 postorder_travel
 
 main_template_SOURCES = main_template.cc
 rspc_cc_algo_version_SOURCES = rspc-cc-algo-version.cc
@@ -30,4 +31,5 @@ calc_in_mod_SOURCES = numeric/calc_in_mod.cc numeric/calc_in_mod.hh
 dense_net_SOURCES = network/dense_net.cc network/dense_net.hh network/network01trait.hh
 sparse_net_SOURCES = network/sparse_net.cc network/sparse_net.hh network/network01trait.hh
 bfs_SOURCES = network/bfs.cc network/bfs.hh network/sparse_net.hh network/network01trait.hh
-tree_root_hash_SOURCES = network/tree_root_hash.cc network/tree_root_hash.hh network/sparse_net.hh network/network01trait.hh
+tree_root_hash_SOURCES = network/tree_root_hash.cc network/tree_root_hash.hh network/dense_net.hh network/network01trait.hh
+postorder_travel_SOURCES = network/postorder_travel.cc network/postorder_travel.hh network/sparse_net.hh network/network01trait.hh

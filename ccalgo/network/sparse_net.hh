@@ -49,6 +49,9 @@ public:
         typedef typename IterTraits::edge_type edge_type;
         typedef typename IterTraits::sto_type sto_type;
         typedef std::pair<std::size_t, edge_type *> value_type;
+        typedef std::forward_iterator_tag iterator_category;
+        typedef value_type & reference;
+        typedef int difference_type;
 
         value_type const & operator*() const { return gp<edge_type>(); }
         const value_type * operator->() const { return &p->p; }

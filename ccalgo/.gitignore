@@ -16,6 +16,7 @@ bfs
 zip_slist
 calc_in_mod
 tree_root_hash
+postorder_travel
 
 # http://www.gnu.org/software/automake
 

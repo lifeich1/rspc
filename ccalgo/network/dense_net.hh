@@ -46,7 +46,12 @@ public:
     class EdgeIterImpl {
     public:
         typedef EdgeIterImpl type;
+
         typedef std::pair<std::size_t, Edge *> value_type;
+        typedef std::forward_iterator_tag iterator_category;
+        typedef value_type & reference;
+        typedef int difference_type;
+        typedef type pointer;
 
         value_type const & operator*() const { return p; }
         const value_type * operator->() const { return &p; }
