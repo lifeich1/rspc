@@ -1,6 +1,4 @@
-#include <iostream>
-#include <algorithm>
-#include <numeric>
+#include <bits/stdc++.h>
 
 // Placeholder for upcoming un-std algorithm, by rspc
 // End placeholder for upcoming un-std algorithm, by rspc
