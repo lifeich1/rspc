@@ -3,6 +3,15 @@
 #include <cstdint>
 
 namespace A {
+
+template <class T>
+inline constexpr T qpow_in_mod(T base, T ind, T m) {
+    T res = 1;
+    for (T bi = base; ind > 0; ind >>= 1, bi = (bi * bi) % m)
+        if (ind & 1) res = (res * bi) % m;
+    return res;
+}
+
 template <int64_t M, class T = int64_t>
 class CalcInMod {
 public:
