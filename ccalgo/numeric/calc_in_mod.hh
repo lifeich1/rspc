@@ -38,8 +38,11 @@ public:
     }
 
     inline type operator+ (type const & a) const { return {(a.v + v) % M}; }
-    inline type operator- (type const & a) const { return {(a.v - v + M) % M}; }
+    inline type operator- (type const & a) const { return {(v - a.v + M) % M}; }
     inline type operator* (type const & a) const { return {(a.v * v) % M}; }
+    inline type operator+= (type const & a) { *this = *this + a; return *this; }
+    inline type operator-= (type const & a) { *this = *this - a; return *this; }
+    inline type operator*= (type const & a) { *this = *this * a; return *this; }
     inline type mul_inv() const { return {qpow(M - 2)}; }
     inline type qpow(T ind) const { return {qpow(v, ind)}; }
 };
