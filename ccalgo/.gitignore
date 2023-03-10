@@ -19,6 +19,7 @@ tree_root_hash
 postorder_travel
 miller_rabin
 vary_tuple
+tree_shape_array
 
 # http://www.gnu.org/software/automake
 
