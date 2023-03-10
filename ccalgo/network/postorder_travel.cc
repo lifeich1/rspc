@@ -9,6 +9,7 @@
 #include "common/assert.hh"
 
 #include <iterator>
+#include <tuple>
 
 template <std::size_t N>
 using Nw01 = A::SparseNet<N, N * 3, A::Network01Trait>;

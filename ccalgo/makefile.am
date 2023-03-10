@@ -15,12 +15,14 @@ check_PROGRAMS = main_template \
 				 calc_in_mod \
 				 tree_root_hash \
 				 postorder_travel \
-				 miller_rabin
+				 miller_rabin \
+				 vary_tuple
 
 main_template_SOURCES = main_template.cc
 rspc_cc_algo_version_SOURCES = rspc-cc-algo-version.cc
 
 zip_slist_SOURCES = common/zip_slist.cc common/zip_slist.hh
+vary_tuple_SOURCES = common/vary_tuple.cc common/vary_tuple.hh
 
 point2d_SOURCES = 2d/point2d.cc 2d/point2d.hh
 input2dcoord_SOURCES = 2d/input2dcoord.cc 2d/input2dcoord.hh
