@@ -4,8 +4,6 @@
 #include <functional>
 #include <utility>
 
-#include <iostream>
-
 namespace A {
 
 struct _vary_tuple_binop__plus_t {};
@@ -58,10 +56,8 @@ struct VaryTuple {
 
     std::tuple<Ts...> t;
 
-    VaryTuple(std::tuple<Ts...> const & t): t{t} //{}
-    { std::cout << "copy cons\n"; }
-    VaryTuple(std::tuple<Ts...> && t): t{std::move(t)} //{}
-    { std::cout << "move cons\n"; }
+    VaryTuple(std::tuple<Ts...> const & t): t{t} {}
+    VaryTuple(std::tuple<Ts...> && t): t{std::move(t)} {}
 
     type operator+ (type const & a) const { return _binop_vary_tuple(_vary_tuple_binop__plus_t{}, this->t, a.t); }
     type operator- (type const & a) const { return _binop_vary_tuple(_vary_tuple_binop__minus_t{}, this->t, a.t); }
@@ -70,6 +66,9 @@ struct VaryTuple {
     type & operator+= (type const & a) { return (*this = *this + a); }
     type & operator-= (type const & a) { return (*this = *this - a); }
     type & operator*= (type const & a) { return (*this = *this * a); }
+
+    inline bool operator== (type const & a) const { return this->t == a.t; }
+    inline bool operator< (type const & a) const { return this->t < a.t; }
 };
 
 

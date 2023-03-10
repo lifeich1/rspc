@@ -45,5 +45,8 @@ public:
     inline type & operator*= (type const & a) { *this = *this * a; return *this; }
     inline type mul_inv() const { return {qpow(M - 2)}; }
     inline type qpow(T ind) const { return {qpow(v, ind)}; }
+
+    inline bool operator== (type const & a) const { return v == a.v; }
+    inline bool operator< (type const & a) const { return v < a.v; }
 };
 }
