@@ -20,6 +20,7 @@ postorder_travel
 miller_rabin
 vary_tuple
 tree_shape_array
+floyd
 
 # http://www.gnu.org/software/automake
 
