@@ -23,6 +23,10 @@ public:
 
     template <class Index>
     inline void arrow(Index src, Index dst, edge_type const & v) {
+#ifdef DENSE_NET__MULTI_EDGE
+        auto p = ei(src, dst);
+        if (Trait::EDGE_DEFAULT == a[p] || Trait::edge_update(a[p], v))
+#endif
         a[ei(src, dst)] = v;
     }
     template <class Index>
@@ -62,7 +66,7 @@ public:
         bool operator==(type const & other) const { return p.second == other.p.second; }
         bool operator!=(type const & other) const { return p.second != other.p.second; }
     private:
-        friend class ::A::DenseNet<N, Trait>::EdgeListImpl<Edge>;
+        friend class EdgeListImpl<Edge>;
 
         EdgeIterImpl(Edge * p, Edge * ed)
             : p{p - (ed - N), p}, ed{ed}

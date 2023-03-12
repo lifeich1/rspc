@@ -21,7 +21,7 @@ struct Floyd {
 
     void operator() (int n) {
         ++ flag_cur;
-        for (int i = 0; i < n; ++i)
+        for (int i = 0; i < n; flag[i][i] = flag_cur, f[i][i] = 0, ++i)
             for (auto const & [v, e] : net->edges(i)) {
                 flag[i][v] = flag_cur;
                 f[i][v] = Trait::edge_value(e);
