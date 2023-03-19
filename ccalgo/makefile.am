@@ -18,7 +18,8 @@ check_PROGRAMS = main_template \
 				 miller_rabin \
 				 vary_tuple \
 				 tree_shape_array \
-				 floyd
+				 floyd \
+				 vec_arr_net
 
 main_template_SOURCES = main_template.cc
 rspc_cc_algo_version_SOURCES = rspc-cc-algo-version.cc
@@ -40,5 +41,6 @@ bfs_SOURCES = network/bfs.cc network/bfs.hh network/sparse_net.hh network/networ
 tree_root_hash_SOURCES = network/tree_root_hash.cc network/tree_root_hash.hh network/dense_net.hh network/network01trait.hh
 postorder_travel_SOURCES = network/postorder_travel.cc network/postorder_travel.hh network/sparse_net.hh network/network01trait.hh
 floyd_SOURCES = network/floyd.cc network/floyd.hh network/network_v_trait.hh network/dense_net.hh
+vec_arr_net_SOURCES = network/vec_arr_net.cc network/vec_arr_net.hh network/postorder_travel.hh
 
 tree_shape_array_SOURCES = segment/tree_shape_array.cc segment/tree_shape_array.hh

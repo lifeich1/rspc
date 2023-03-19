@@ -21,6 +21,7 @@ miller_rabin
 vary_tuple
 tree_shape_array
 floyd
+vec_arr_net
 
 # http://www.gnu.org/software/automake
 

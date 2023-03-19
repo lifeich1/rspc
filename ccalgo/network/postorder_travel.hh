@@ -4,6 +4,7 @@
 #if 0
 #define POSTORDER_TRAVEL__S_TREEM
 #define POSTORDER_TRAVEL__S_PAPA
+#define POSTORDER_TRAVEL__NOEDGEEXT
 #endif
 
 namespace A {
@@ -49,7 +50,11 @@ public:
         while (p >= 0) {
             const auto lp = p;
             auto x = stk[p];
+#ifdef POSTORDER_TRAVEL__NOEDGEEXT
+            for (auto const & v : net->edges(x)) {
+#else
             for (auto const & [v, e] : net->edges(x)) {
+#endif
                 if (cur != flag[v]) {
                     flag[v] = cur;
                     stk[++p] = v;
