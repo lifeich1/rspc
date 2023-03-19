@@ -9,6 +9,8 @@
 #else
 #define TRACE(...) (void)0
 #endif
+#define TRACELN(...) TRACE(__VA_ARGS__; cout << endl)
+#define TRACE_VEC(VEC, ITEM, ...) TRACE(cout << #VEC << "= "; for_each((VEC).begin(), (VEC).end(), [&](ITEM _i) { __VA_ARGS__; }))
 using namespace std;
 #define self_todo_placeholder
 
