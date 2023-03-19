@@ -7,13 +7,14 @@
 
 #include <iterator>
 
+std::vector<int> es[9];
+auto nw = A::net(es);
+A::PostorderTravel<9, decltype(nw)> pt{&nw};
+
 int main() {
-    std::vector<int> es[9];
     es[0] = {1, 3, 5, 7};
     es[1] = {2, 4};
     es[2] = {6};
-    auto nw = A::net(es);
-    A::PostorderTravel<9, decltype(nw)> pt{&nw};
     std::vector<int> vs;
     pt(0, std::back_inserter(vs));
     std::copy(vs.begin(), vs.end(), std::ostream_iterator<int> (std::cout, " "));
