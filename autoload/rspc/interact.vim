@@ -25,9 +25,7 @@ function! rspc#interact#Template() abort
     if rspc#utils#is_rs_f(bufname())
         call rspc#yank#AppendTemplate(l:name)
     elseif rspc#utils#is_cc_f(bufname())
-        call rspc#ccyank#RebuildBuf4Scheme()
         call rspc#ccyank#AppendTemplate(l:name)
-        call rspc#ccyank#FixTemplates()
     else
         throw "File format of " . bufname() " is unexpected!"
     endif
@@ -57,9 +55,7 @@ function! rspc#interact#ReloadAll() abort
 endfunction
 
 function! rspc#interact#CcReloadAll() abort
-    call rspc#ccyank#ClearBuffer()
-    call rspc#ccyank#RebuildBuf4Scheme()
-    call rspc#ccyank#FixTemplates(1)
+    call rspc#ccyank#FixTemplates()
 endfunction
 
 function! rspc#interact#Make() abort
@@ -73,5 +69,4 @@ function! rspc#interact#Make() abort
 endfunction
 
 function! rspc#interact#Flush() abort
-    call rspc#ccyank#ClearBuffer()
 endfunction
