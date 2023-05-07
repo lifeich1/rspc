@@ -65,7 +65,7 @@ function! rspc#interact#Make() abort
     if rspc#utils#is_cc_f(bufname())
         execute 'set mp=make\ F=%\ -f\ ' . rspc#utils#CcMakefile()
     endif
-    execute "make"
+    execute "Make"
 endfunction
 
 function! rspc#interact#Flush() abort
