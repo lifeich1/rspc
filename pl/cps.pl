@@ -13,10 +13,46 @@ $log->autoflush(1);
 sub info {
     say $log "$$# @_";
 }
+my $port = '27121';
 
+sub detect_alive {
+    my $conn = IO::Socket::INET->new(
+        PeerHost=>'127.0.0.1',
+        PeerPort=>$port,
+        Proto => 'tcp',
+        Type=>IO::Socket::SOCK_STREAM,
+        Blocking=>1,
+    ) or die "DEAD server: create tcp socket error: $!";
+    say $conn "RSPC#echo";
+    $conn->autoflush(1);
+    $conn->shutdown(SHUT_WR);
+    chomp(my $resp_line = <$conn>);
+    die "bad response: $resp_line" unless $resp_line =~ /RSPC#cps#alive/;
+    say "$resp_line";
+    exit;
+}
+
+my %cmds = (
+    checkalive => '(a|checkalive|detect-alive)',
+    help => '(h|help)',
+);
+while($_ = shift) {
+    if (/\A$cmds{checkalive}\Z/) {
+        &detect_alive;
+        exit;
+    } elsif (/\A$cmds{help}\Z/) {
+        say "cmds:";
+        while(my ($k, $v) = each %cmds) {
+            printf "  %-40s%s\n", $v, $k;
+        }
+        exit;
+    }
+}
+
+# follow main
 my $lis = IO::Socket::INET->new(
     LocalHost=>'127.0.0.1',
-    LocalPort=>'27121',
+    LocalPort=>$port,
     Listen=>8,
     Type=>IO::Socket::SOCK_STREAM,
     Proto=>'tcp',
@@ -33,7 +69,11 @@ while (1) {
     while(<$conn>) {
         chomp;
         &info("l: $_");
-        if ($in_body) {
+        if (/\ARSPC#echo/) {
+            $conn->autoflush(1);
+            say $conn "RSPC#cps#alive $$";
+            last;
+        } elsif ($in_body) {
             say;
         } elsif (/content-length/i) {
             &info("header: $_");
