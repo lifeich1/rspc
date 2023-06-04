@@ -70,3 +70,7 @@ endfunction
 
 function! rspc#interact#Flush() abort
 endfunction
+
+function! rspc#interact#DumpTest() abort
+    call rspc#utils#cps_exec("dumptest:" . expand("%:h"))
+endfunction

@@ -18,6 +18,7 @@ open(my $log, '>>', '/tmp/rspc.ccfmt.log')
 my $log_h = "$$#" . (time) . "# ";
 sub info {
     say $log "${log_h}@_";
+    say @_;
 }
 
 sub load_template {
