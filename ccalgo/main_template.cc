@@ -5,16 +5,20 @@
 // Scheme by rspc:
 
 #if defined(RSPC_TRACE_HINT)
-#define TRACE(...) do { __VA_ARGS__; } while (0)
+#define TRACE(...)                                                             \
+  do {                                                                         \
+    __VA_ARGS__;                                                               \
+  } while (0)
 #else
 #define TRACE(...) (void)0
 #endif
 #define TLN(...) TRACE(__VA_ARGS__; cerr << endl)
-#define TA(VEC, ITEM, ...) TRACE(cerr << #VEC << "= "; for_each((VEC).begin(), (VEC).end(), [&](ITEM _i) { __VA_ARGS__; }))
+#define TA(VEC, ITEM, ...)                                                     \
+  TRACE(cerr << #VEC << "= ";                                                  \
+        for_each((VEC).begin(), (VEC).end(), [&](ITEM _i) { __VA_ARGS__; }))
 #define TV(EXPR) TRACE(cerr << #EXPR " = " << (EXPR))
 using namespace std;
 #define self_todo_placeholder
-
 
 int main() {
 #if defined(RSPC_TRACE_BTIME)

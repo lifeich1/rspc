@@ -8,21 +8,28 @@ use open qw/:std :utf8/;
 my $src = shift;
 my $cmd = shift;
 
-chomp(my $btim = qx(date +%D-%Hh-%Mm-%Ss));
+chomp( my $btim = qx(date +%D-%Hh-%Mm-%Ss) );
 my $bin = $src;
 $bin =~ s/(.+)\.(?:cc|cpp)/$1/;
 
 # TODO test modify time for skip
 
+# TODO use bear only if available
+
 my @ex = (
-  qw(g++ -std=c++17 -g -Wall -DRSPC_TRACE_HINT=1),
+  qw(
+    bear -- g++ -std=c++17 -g -Wall -DRSPC_TRACE_HINT=1
+    -I/usr/include/x86_64-linux-gnu/c++/11
+    -I/usr/lib/gcc/x86_64-linux-gnu/11/include
+    -I/usr/include/x86_64-linux-gnu
+    -I/usr/include/c++/11
+    -I/usr/include/c++/11/backward
+  ),
   qq(-DRSPC_TRACE_BTIME="${btim}"),
-  $src,
-  '-o', $bin,
+  $src, '-o', $bin,
 );
 say join ' ', @ex;
 
 system(@ex) == 0 or die('make failed');
-
 
 # vim: ts=2 sw=2

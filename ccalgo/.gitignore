@@ -2,6 +2,8 @@
 /*.log
 /*.trs
 config.h
+/compile_commands.json
+/.cache
 
 # built binary
 main_template
