@@ -9,20 +9,23 @@
 #else
 #define TRACE(...) (void)0
 #endif
-#define TRACELN(...) TRACE(__VA_ARGS__; cout << endl)
-#define TRACE_VEC(VEC, ITEM, ...) TRACE(cout << #VEC << "= "; for_each((VEC).begin(), (VEC).end(), [&](ITEM _i) { __VA_ARGS__; }))
+#define TLN(...) TRACE(__VA_ARGS__; cerr << endl)
+#define TA(VEC, ITEM, ...) TRACE(cerr << #VEC << "= "; for_each((VEC).begin(), (VEC).end(), [&](ITEM _i) { __VA_ARGS__; }))
+#define TV(EXPR) TRACE(cerr << #EXPR " = " << (EXPR))
 using namespace std;
 #define self_todo_placeholder
 
 
 int main() {
 #if defined(RSPC_TRACE_BTIME)
-    TRACE(cout << "build time: " RSPC_TRACE_BTIME "\n");
+  TRACE(cerr << "build time: " RSPC_TRACE_BTIME "\n");
 #else
-    ios::sync_with_stdio(0);
-    cin.tie(0), cout.tie(0);
+  ios::sync_with_stdio(0);
+  cin.tie(0), cout.tie(0);
 #endif
 
-    // First todo here, by rspc
-    return 0;
+  // First todo here, by rspc
+  return 0;
 }
+
+// vim: ts=2 sw=2

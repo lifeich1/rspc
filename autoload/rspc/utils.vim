@@ -2,6 +2,7 @@ let s:plugin_dir = fnamemodify(expand("<sfile>"), ":h:h:h")
 let s:cc_temdir = s:plugin_dir . '/ccalgo'
 let s:cc_makefile = s:cc_temdir . '/arena.mk'
 let s:pl_dir = s:plugin_dir . '/pl'
+let s:mk_exe = s:pl_dir . '/arena_mk.pl'
 let s:cps_job = -1
 
 function! rspc#utils#is_rs_f(name)
@@ -18,6 +19,10 @@ endfunction
 
 function! rspc#utils#CcMakefile()
     return s:cc_makefile
+endfunction
+
+function! rspc#utils#CcMaker()
+    return s:mk_exe
 endfunction
 
 function! rspc#utils#find_cc_tem(name)
