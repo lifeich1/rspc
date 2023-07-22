@@ -13,10 +13,10 @@
 #define TRACE(...) (void)0
 #endif
 #define TLN(...) TRACE(__VA_ARGS__; cerr << endl)
-#define TA(VEC, ITEM, ...)                                                     \
+#define TA(VEC, ...)                                                           \
   TRACE(cerr << #VEC << "= ";                                                  \
-        for_each((VEC).begin(), (VEC).end(), [&](ITEM _i) { __VA_ARGS__; }))
-#define TV(EXPR) TRACE(cerr << #EXPR " = " << (EXPR))
+        for_each((VEC).begin(), (VEC).end(), [&](auto _) { __VA_ARGS__; }))
+#define TV(EXPR) TRACE(cerr << #EXPR " = " << (EXPR) << ' ')
 using namespace std;
 #define self_todo_placeholder
 

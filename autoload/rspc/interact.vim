@@ -74,3 +74,16 @@ endfunction
 function! rspc#interact#DumpTest() abort
     call rspc#utils#cps_exec("dumptest:" . expand("%:p:h"))
 endfunction
+
+function! rspc#interact#RegTest() abort
+    call rspc#utils#arena_exec('_')
+endfunction
+
+function! rspc#interact#AutoTest() abort
+    call rspc#utils#arena_exec('__')
+endfunction
+
+function! rspc#interact#CustomTest() abort
+    let l:name = input("test basename: ")
+    call rspc#utils#arena_exec(l:name)
+endfunction

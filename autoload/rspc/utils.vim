@@ -41,6 +41,14 @@ function! rspc#utils#cps_pl()
     return s:pl_dir . "/cps.pl"
 endfunction
 
+function! rspc#utils#arena_exec(cmd)
+    if &modified
+        execute 'w'
+    endif
+    let l:cmd = s:mk_exe . " " . expand('%') . " " . a:cmd
+    execute "Start " . l:cmd
+endfunction
+
 function! rspc#utils#cps_exec(cmd)
     let l:cmd = s:pl_dir . "/cps.pl e " . a:cmd
     execute "Start " . l:cmd

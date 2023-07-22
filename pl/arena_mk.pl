@@ -17,11 +17,54 @@ defined( my $cmd = shift ) or exit;
 if ( $cmd eq "_" ) {
   &reg_test($bin);
 }
+elsif ( $cmd eq "__" ) {
+  &auto_test($bin);
+}
 elsif ( -f "$cmd.in" ) {
-  0 == system( "bash", "-c", "$bin < $cmd.in" )
-    or die "$bin abort!";
-  say "========== rc code 1 for keep quick window open ==========";
-  exit 1;
+  &shca("$bin < $cmd.in");
+}
+
+sub shca {
+  my ($cmd) = @_;
+  0 == system( 'bash', '-c', $cmd ) or die "failed call $cmd";
+}
+
+sub auto_test {
+  my ($bin) = @_;
+  my $ans;
+  foreach ( ( "ans.cc", "ans.py", "ff.cc" ) ) {
+    if ( -f $_ ) {
+      $ans = $_;
+      last;
+    }
+  }
+  defined($ans) or die "Cannot find ans prog!";
+
+  my $gen = "./gen.py";
+  die "$gen not exist!" unless -f $gen;
+
+  my $abin;
+  if ( $ans =~ /(.+)\.cc/ ) {
+    $abin = "./$1";
+    &build( $ans, $abin );
+  }
+  else {
+    $abin = "python ./$ans";
+  }
+
+  my $kt = 'keeptest';
+  0 == system( 'touch', $kt ) or die "touch $kt error!";
+  my ( $fi,  $fa, $fo )  = ( "1.in", "1.ans", "1.out" );
+  my ( $cnt, $pm, $pth ) = ( 0,      1,       30 );
+  while ( -f $kt ) {
+    &shca("python $gen > $fi 2>/dev/null");
+    &shca("$abin < $fi > $fa 2>/dev/null");
+    &shca("$bin < $fi > $fo 2>/dev/null");
+    &smart_diff( $fo, $fa );
+    $cnt += 1;
+    say "$cnt OK" if $cnt % $pm == 0;
+    ( $pth, $pm ) = ( $pth * 10, $pm * 10 ) if $cnt >= $pth;
+  }
 }
 
 sub smart_diff {
@@ -41,6 +84,7 @@ sub reg_test {
       &smart_diff( "$name.out", "$name.ans" );
     }
   }
+  say "\n✅ ";
 }
 
 sub build {
