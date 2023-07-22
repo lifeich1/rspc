@@ -6,16 +6,41 @@ use warnings;
 use open qw/:std :utf8/;
 
 my $src = shift;
-my $cmd = shift;
 
 my $bin = $src;
 if ( $src =~ /(.+)\.(?:cc|cpp)/ ) {
-  $bin = $1;
+  $bin = "./$1";
   &build( $src, $bin );
+}
+
+defined( my $cmd = shift ) or exit;
+if ( $cmd eq "_" ) {
+  &reg_test($bin);
+}
+elsif ( -f "$cmd.in" ) {
+  0 == system( "bash", "-c", "$bin < $cmd.in" )
+    or die "$bin abort!";
+  say "========== rc code 1 for keep quick window open ==========";
+  exit 1;
+}
+
+sub smart_diff {
+  my ( $n1, $n2 ) = @_;
+  0 == system( "diff", "-b", $n1, $n2 )
+    or die "$n1 diff $n2";
 }
 
 sub reg_test {
   my ($bin) = @_;
+  my @list_in = glob '*.in';
+  foreach (@list_in) {
+    my ($name) = ( $_ =~ /(.+)\.in/ );
+    if ( -f "$name.ans" ) {
+      0 == system( "bash", "-c", "$bin < $name.in > $name.out" )
+        or die("$bin abort!");
+      &smart_diff( "$name.out", "$name.ans" );
+    }
+  }
 }
 
 sub build {
