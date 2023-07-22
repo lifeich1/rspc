@@ -25,7 +25,7 @@ sub build {
   chomp( my $btim = qx(date +%D-%Hh-%Mm-%Ss) );
 
   my @bear_prefix = ();
-  if ( 0 == system(qw{which bear > /dev/null}) ) {
+  if ( 0 == system(qw{which bear}) ) {
     @bear_prefix = qw/bear --/;
   }
 
