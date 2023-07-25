@@ -79,6 +79,7 @@ sub reg_test {
   foreach (@list_in) {
     my ($name) = ( $_ =~ /(.+)\.in/ );
     if ( -f "$name.ans" ) {
+      say "testing $name";
       0 == system( "bash", "-c", "$bin < $name.in > $name.out" )
         or die("$bin abort!");
       &smart_diff( "$name.out", "$name.ans" );
