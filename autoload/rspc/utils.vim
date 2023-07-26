@@ -57,15 +57,13 @@ endfunction
 function! rspc#utils#restart_cps(verbose)
     let l:cps = rspc#utils#cps_pl()
     let l:will_restart = 0
-    perl << END
-    my $verb = VIM::Eval("a:verbose");
-    my $cps = VIM::Eval("l:cps");
-    say "checking cps alive" if $verb;
-    if (0 != system("$cps checkalive > /dev/null 2>&1")) {
-        say "will restart" if $verb;
-        VIM::DoCommand("let l:will_restart = 1");
-    }
-END
+    if a:verbose
+        echo "checking cps alive"
+    endif
+    call system(l:cps . ' checkalive > /dev/null 2>&1')
+    if v:shell_error
+        let l:will_restart = 1
+    endif
     if a:verbose
         echo "var willrestart: " . l:will_restart
     endif

@@ -106,7 +106,7 @@ my $lis = IO::Socket::INET->new(
       return;
     }
     my $key;
-    if ( $url =~ m{codeforces.com/contest/(\d+)/problem/(\w+)} ) {
+    if ( $url =~ m{codeforces\.com/contest/(\d+)/problem/(\w+)} ) {
       if ( $2 eq "0" ) {
         $key = "$1/A";
       }
@@ -114,7 +114,10 @@ my $lis = IO::Socket::INET->new(
         $key = "$1/$2";
       }
     }
-    elsif ( $url =~ m{atcoder.jp/contests/(\w+)/tasks/\w+_(\w+)} ) {
+    elsif ( $url =~ m{atcoder\.jp/contests/(\w+)/tasks/\w+_(\w+)} ) {
+      $key = "$1/$2";
+    }
+    elsif ( $url =~ m{codechef\.com/(\w+)/problems/(\w+)} ) {
       $key = "$1/$2";
     }
     else {
