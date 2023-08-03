@@ -31,6 +31,33 @@
       $('h1[title]')[0].onclick = onchange;
     };
   }
+  else if (window.location.host == 'codeforces.com') {
+    rocket.fuel = () => {
+      let sl = $('select[name="submittedProblemIndex"')[0];
+      let p = sl.options[sl.selectedIndex].value;
+      if (p == '') throw 'problem not chosen';
+      return window.location.pathname.split('/')[2] + '/' + p[0].toLowerCase();
+    };
+    rocket.first_delay = 1000;
+    rocket.launch = src => {
+      unsafeWindow.ace.edit('editor').setValue(src);
+    };
+    rocket.onchange = onchange => {
+      $('select[name="submittedProblemIndex"')[0].onchange = onchange;
+    };
+    let h = window.location.hash;
+    if (h) {
+      let m = h.slice(1);
+      let sl = $('select[name="submittedProblemIndex"')[0];
+      for (let i = 0; i < sl.options.length; ++i) {
+        if (m == sl.options[i].value) {
+          sl.selectedIndex = i;
+          break;
+        }
+      }
+      console.log('chose by hash', h, m, sl.selectedIndex);
+    }
+  }
   else {
     alert('Not support this CP yet');
     return;
