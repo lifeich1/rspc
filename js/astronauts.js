@@ -3,7 +3,7 @@
 
   var rocket = { delay: 100 };
   
-  // begin dispatch by url
+  // dispatch by url
   if (window.location.host == 'atcoder.jp') {
     rocket.fuel = () => {
       let opts = $('select#select-task')[0].options;
@@ -15,6 +15,20 @@
     };
     rocket.onchange = onchange => {
       $('select#select-task')[0].onchange = onchange;
+    };
+  }
+  else if (window.location.host == 'www.codechef.com') {
+    rocket.fuel = () => {
+      let p = window.location.pathname.split('/');
+      return p[1] + '/' + p[3];
+    };
+    rocket.first_delay = 8000;
+    rocket.launch = src => {
+      unsafeWindow.ace.edit('submit-ide-v2').setValue(src);
+    };
+    rocket.onchange = async onchange => {
+      await setDelay(8000);
+      $('h1[title]')[0].onclick = onchange;
     };
   }
   else {
@@ -51,6 +65,13 @@
       });
   }
 
-  rocket.onchange(emit);
-  emit();
+  if (rocket.onchange != null) {
+    rocket.onchange(emit);
+  }
+  (async () => {
+    if (rocket.first_delay) {
+      await setDelay(rocket.first_delay);
+    }
+    emit();
+  })();
 })();
