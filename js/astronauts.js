@@ -7,10 +7,17 @@
     for (let i = 0; i < sl.options.length; ++i) {
       if (val == sl.options[i].value) {
         sl.selectedIndex = i;
-        break;
+        console.log('chose by value', val, sl.selectedIndex, sl.options[i].value);
+        return;
       }
     }
-    console.log('chose by value', val, sl.selectedIndex);
+    for (let i = 0; i < sl.options.length; ++i) {
+      if (typeof sl.options[i].value == 'string' && sl.options[i].value.startsWith(val)) {
+        sl.selectedIndex = i;
+        console.log('chose by value', val, sl.selectedIndex, sl.options[i].value);
+        return;
+      }
+    }
   }
   function sel_setbyhash(sl) {
     let h = window.location.hash;
