@@ -2,7 +2,23 @@
   'use strict';
 
   var rocket = { delay: 100 };
-  
+
+  function sel_setbyval(sl, val) {
+    for (let i = 0; i < sl.options.length; ++i) {
+      if (val == sl.options[i].value) {
+        sl.selectedIndex = i;
+        break;
+      }
+    }
+    console.log('chose by value', val, sl.selectedIndex);
+  }
+  function sel_setbyhash(sl) {
+    let h = window.location.hash;
+    if (h) {
+      sel_setbyval(sl, h.slice(1));
+    }
+  }
+
   // dispatch by url
   if (window.location.host == 'atcoder.jp') {
     rocket.fuel = () => {
@@ -31,6 +47,25 @@
       $('h1[title]')[0].onclick = onchange;
     };
   }
+  else if (window.location.host == 'm1.codeforces.com'
+    || window.location.host == 'm2.codeforces.com'
+    || window.location.host == 'm3.codeforces.com') {
+    rocket.fuel = () => {
+      let sl = $('select#problemIndex')[0];
+      let p = sl.options[sl.selectedIndex].value;
+      if (p == '') throw 'problem not chosen';
+      return window.location.pathname.split('/')[2] + '/' + p[0].toLowerCase();
+    };
+    rocket.first_delay = 100;
+    rocket.launch = src => {
+      $('textarea#source').text(src);
+    };
+    rocket.onchange = onchange => {
+      $('select#problemIndex')[0].onchange = onchange;
+    };
+    sel_setbyhash($('select#problemIndex')[0]);
+    sel_setbyval($('select#programTypeId')[0], '54');
+  }
   else if (window.location.host == 'codeforces.com') {
     rocket.fuel = () => {
       let sl = $('select[name="submittedProblemIndex"')[0];
@@ -38,25 +73,14 @@
       if (p == '') throw 'problem not chosen';
       return window.location.pathname.split('/')[2] + '/' + p[0].toLowerCase();
     };
-    rocket.first_delay = 1000;
+    rocket.first_delay = 100;
     rocket.launch = src => {
       unsafeWindow.ace.edit('editor').setValue(src);
     };
     rocket.onchange = onchange => {
       $('select[name="submittedProblemIndex"')[0].onchange = onchange;
     };
-    let h = window.location.hash;
-    if (h) {
-      let m = h.slice(1);
-      let sl = $('select[name="submittedProblemIndex"')[0];
-      for (let i = 0; i < sl.options.length; ++i) {
-        if (m == sl.options[i].value) {
-          sl.selectedIndex = i;
-          break;
-        }
-      }
-      console.log('chose by hash', h, m, sl.selectedIndex);
-    }
+    sel_setbyhash($('select[name="submittedProblemIndex"')[0]);
   }
   else {
     alert('Not support this CP yet');
