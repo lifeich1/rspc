@@ -87,3 +87,8 @@ function! rspc#interact#CustomTest() abort
     let l:name = input("test basename: ")
     call rspc#utils#arena_exec(l:name)
 endfunction
+
+function! rspc#interact#Submit(plain) abort
+    let l:cmd = rspc#utils#submit_pl() . " " . expand('%:p') . " " . a:plain
+    execute "Start " . l:cmd
+endfunction

@@ -41,6 +41,10 @@ function! rspc#utils#cps_pl()
     return s:pl_dir . "/cps.pl"
 endfunction
 
+function! rspc#utils#submit_pl()
+    return s:pl_dir . "/submit.pl"
+endfunction
+
 function! rspc#utils#arena_exec(cmd)
     if &modified
         execute 'w'
