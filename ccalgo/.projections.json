@@ -1,0 +1,13 @@
+{
+  "*.log": { "type": "log" },
+  ".gitignore": { "type": "i" },
+  "makefile.am": { "type": "m" },
+  "*.hh": {
+    "type": "h",
+    "alternate": [
+      "{}.cc",
+      "{basename}.log"
+    ]
+  },
+  "*.cc": { "type": "s", "alternate": "{}.hh" }
+}
