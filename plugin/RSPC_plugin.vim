@@ -10,3 +10,5 @@ command! RSPCRegTest call rspc#interact#RegTest()
 command! RSPCAutoTest call rspc#interact#AutoTest()
 command! RSPCCustomTest call rspc#interact#CustomTest()
 command! -bang RSPCSubmit call rspc#interact#Submit(<bang>1)
+
+execute "luaf " . rspc#utils#Luafil()

@@ -53,6 +53,10 @@ function! rspc#utils#arena_exec(cmd)
     execute "Start " . l:cmd
 endfunction
 
+function! rspc#utils#Luafil()
+    return s:plugin_dir . "/lua/rspc.lua"
+endfunction
+
 function! rspc#utils#cps_exec(cmd)
     let l:cmd = s:pl_dir . "/cps.pl e " . a:cmd
     execute "Start " . l:cmd
