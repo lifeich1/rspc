@@ -16,6 +16,9 @@
 #define TA(VEC, ...)                                                           \
   TRACE(cerr << #VEC << "= ";                                                  \
         for_each((VEC).begin(), (VEC).end(), [&](auto _) { __VA_ARGS__; }))
+#define TI(HEAD, TAIL, ...)                                                    \
+  TRACE(cerr << "[" #HEAD "," #TAIL ") = ";                                    \
+        for_each((HEAD), (TAIL), [&](auto _) { __VA_ARGS__; }))
 #define TV(EXPR) TRACE(cerr << #EXPR " = " << (EXPR) << ' ')
 using namespace std;
 #define self_todo_placeholder
