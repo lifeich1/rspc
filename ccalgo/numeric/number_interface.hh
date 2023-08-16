@@ -8,6 +8,13 @@ template <typename Base> struct number_interface : public Base {
   template <class T> number_interface(T const &t) : Base{t} {}
   template <class T> number_interface(T &&t) : Base{t} {}
 
+  void get_inv() const {
+    Self r = *this;
+    r.inv();
+    return r;
+  }
+  void div(Self const &rhs) { mul(rhs.inv()); }
+
   Self &operator+=(Self const &other) {
     this->add(other);
     return *this;

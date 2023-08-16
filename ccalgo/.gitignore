@@ -25,6 +25,7 @@ tree_shape_array
 floyd
 vec_arr_net
 floor_sum
+qpow64
 
 # http://www.gnu.org/software/automake
 

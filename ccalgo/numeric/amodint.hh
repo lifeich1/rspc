@@ -5,32 +5,38 @@
 
 #include "number_interface.hh"
 
-template <std::size_t L> struct array_modint_impl {
+template <std::size_t L, int ResId = 0> struct array_modint_impl {
   typedef array_modint_impl<L> Self;
-  typedef bool compare_r;
+  typedef int compare_r;
   static std::array<int64_t, L> M;
   std::array<int64_t, L> v;
 
-  bool eq(Self const &rhs) const {
-    for (int i = 0; i < v.size(); ++i) {
-      if (v[i] != rhs.v[i])
-        return false;
-    }
-    return true;
+  int64_t operator[](const int i) const { return v[i]; }
+
+  int cmp(Self const &rhs) const {
+    for (std::size_t i = 0; i < L; ++i)
+      if (v[i] != rhs[i])
+        return v[i] < rhs[i] ? -1 : 1;
+    return 0;
   }
 
   void add(Self const &rhs) {
-    // TODO
+    for (std::size_t i = 0; i < L; ++i)
+      v[i] = (v[i] + rhs[i]) % M[i];
   }
   void sub(Self const &rhs) {
-    // TODO
+    for (std::size_t i = 0; i < L; ++i)
+      v[i] = (v[i] + M[i] - rhs[i]) % M[i];
   }
   void mul(Self const &rhs) {
-    // TODO
+    for (std::size_t i = 0; i < L; ++i)
+      v[i] = (v[i] * rhs[i]) % M[i];
   }
-  void div(Self const &rhs) {
-    // TODO
+  void inv() {
+    for (std::size_t i = 0; i < L; ++i)
+      v[i] = qpow64(v[i], M[i] - 2, M[i]);
   }
 };
 
-template <std::size_t L> using amodint = number_interface<array_modint_impl<L>>;
+template <std::size_t L, int ResId = 0>
+using amodint = number_interface<array_modint_impl<L, ResId>>;
