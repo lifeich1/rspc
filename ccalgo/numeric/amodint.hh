@@ -40,3 +40,6 @@ template <std::size_t L, int ResId = 0> struct array_modint_impl {
 
 template <std::size_t L, int ResId = 0>
 using amodint = number_interface<array_modint_impl<L, ResId>>;
+
+#define AMODINT_M(L) std::array<int64_t, L> amodint<L>::M
+#define AMODINT_M2(L, R) std::array<int64_t, L> amodint<L, R>::M
