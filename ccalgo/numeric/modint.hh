@@ -6,7 +6,6 @@
 
 template <int64_t M> struct modint_impl {
   typedef modint_impl<M> Self;
-  typedef int compare_r;
   int64_t v;
 
   modint_impl() : v{0} {}

@@ -26,6 +26,7 @@ floyd
 vec_arr_net
 floor_sum
 qpow64
+modint
 
 # http://www.gnu.org/software/automake
 
