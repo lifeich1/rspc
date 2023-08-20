@@ -27,6 +27,7 @@ vec_arr_net
 floor_sum
 qpow64
 modint
+ext_gcd
 
 # http://www.gnu.org/software/automake
 

@@ -28,7 +28,8 @@ check_PROGRAMS = main_template \
 				 vec_arr_net \
 				 floor_sum \
 				 qpow64 \
-				 modint
+				 modint \
+				 ext_gcd
 
 main_template_SOURCES = main_template.cc
 rspc_cc_algo_version_SOURCES = rspc-cc-algo-version.cc
@@ -46,6 +47,7 @@ miller_rabin_SOURCES = numeric/miller_rabin.cc numeric/miller_rabin.hh
 floor_sum_SOURCES = numeric/floor_sum.cc numeric/floor_sum.hh
 qpow64_SOURCES = numeric/qpow64.cc numeric/qpow64.hh
 modint_SOURCES = numeric/modint.cc numeric/modint.hh
+ext_gcd_SOURCES = numeric/ext_gcd.cc numeric/ext_gcd.hh
 
 dense_net_SOURCES = network/dense_net.cc network/dense_net.hh network/network01trait.hh
 sparse_net_SOURCES = network/sparse_net.cc network/sparse_net.hh network/network01trait.hh
