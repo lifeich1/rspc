@@ -6,9 +6,6 @@
 template <typename Base> struct number_interface : public Base {
   typedef number_interface<Base> Self;
 
-  template <class T> number_interface(T const &t) : Base{t} {}
-  template <class T> number_interface(T &&t) : Base{t} {}
-
   template <typename... Args>
   number_interface(Args... args) : Base(std::forward<Args>(args)...) {}
 
