@@ -38,7 +38,7 @@ sub load_template {
 
   foreach (@ll) {
     chomp;
-    if (m{#include ".*([^/]+)\.hh"}) {
+    if (m{#include "(?:\w+/)?([^/]+)\.hh"}) {
       $deps{$1}++;
     }
     elsif (m/\A[^#]/) {
