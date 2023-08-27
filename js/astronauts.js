@@ -34,7 +34,7 @@
         opts[opts.selectedIndex].value.split('_')[1];
     };
     rocket.launch = src => {
-      $('.editor').data('editor').doc.setValue(src);
+      unsafeWindow.ace.edit('editor').setValue(src);
     };
     rocket.onchange = onchange => {
       $('select#select-task')[0].onchange = onchange;
