@@ -47,7 +47,9 @@
     };
     rocket.first_delay = 8000;
     rocket.launch = src => {
-      unsafeWindow.ace.edit('submit-ide-v2').setValue(src);
+      unsafeWindow.ace.edit('submit-ide-v2').setValue(
+        '// load_time: ' + (new Date().toString()) + '\n'
+        + src);
     };
     rocket.onchange = async onchange => {
       await setDelay(8000);
