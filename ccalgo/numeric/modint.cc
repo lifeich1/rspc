@@ -13,6 +13,7 @@ int main() {
   ASSERT_EQ((b / 2).v, 7);
   ASSERT_EQ((b + 8).v, 0);
   ASSERT_EQ((b - 8).v, 6);
+  ASSERT_EQ(b.qpow(4).v, 4);
 
   return 0;
 }

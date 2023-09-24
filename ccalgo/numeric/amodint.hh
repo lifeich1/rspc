@@ -12,8 +12,11 @@ template <std::size_t L, int ResId = 0> struct array_modint_impl {
   std::array<int64_t, L> v;
 
   array_modint_impl() { std::fill(v.begin(), v.end(), 0); }
-  template <class T> explicit array_modint_impl(T t) : v{t} {}
+  template <class T> explicit array_modint_impl(T t) {
+    std::fill(v.begin(), v.end(), t);
+  }
   int64_t operator[](const int i) const { return v[i]; }
+  static Self one() { return Self(1); }
 
   int cmp(Self const &rhs) const {
     for (std::size_t i = 0; i < L; ++i)

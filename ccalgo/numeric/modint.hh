@@ -10,6 +10,7 @@ template <int64_t M> struct modint_impl {
 
   modint_impl() : v{0} {}
   template <class T> explicit modint_impl(T t) : v{t} {}
+  static Self one() { return Self(1); }
 
   void add(Self const &rhs) { v = (v + rhs.v) % M; }
   void sub(Self const &rhs) { v = (v + M - rhs.v) % M; }
