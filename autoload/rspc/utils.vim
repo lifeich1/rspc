@@ -63,6 +63,10 @@ function! rspc#utils#cps_exec(cmd)
 endfunction
 
 function! rspc#utils#restart_cps(verbose)
+    if get(b:, "rspc_restarted_cps", 0)
+      return
+    endif
+    let b:rspc_restarted_cps = 1
     let l:cps = rspc#utils#cps_pl()
     let l:will_restart = 0
     if a:verbose
