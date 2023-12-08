@@ -14,6 +14,10 @@ template <std::size_t L, int ResId = 0> struct array_modint_impl {
   array_modint_impl() { std::fill(v.begin(), v.end(), 0); }
   template <class T> explicit array_modint_impl(T t) {
     std::fill(v.begin(), v.end(), t);
+    if (t < 0) {
+      for (unsigned i = 0; i < L; ++i)
+        v[i] += M[i];
+    }
   }
   int64_t operator[](const int i) const { return v[i]; }
   static Self one() { return Self(1); }
@@ -45,6 +49,8 @@ template <std::size_t L, int ResId = 0> struct array_modint_impl {
 
 template <std::size_t L, int ResId = 0>
 using amodint = number_interface<array_modint_impl<L, ResId>>;
-
-#define AMODINT_M(L) std::array<int64_t, L> amodint<L>::M
-#define AMODINT_M2(L, R) std::array<int64_t, L> amodint<L, R>::M
+#define MINT_M(L, ...)                                                         \
+  template <> std::array<int64_t, L> array_modint_impl<L>::M = {__VA_ARGS__}
+#define EXMINT_M(L, RID, ...)                                                  \
+  template <>                                                                  \
+  std::array<int64_t, L> array_modint_impl<L, RID>::M = {__VA_ARGS__}

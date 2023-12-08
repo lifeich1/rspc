@@ -57,6 +57,11 @@ template <typename Base> struct number_interface : public Base {
     r -= other;
     return r;
   }
+  Self operator-() const {
+    Self r;
+    r -= *this;
+    return r;
+  }
   Self operator*(Self const &other) const {
     Self r{*this};
     r *= other;
